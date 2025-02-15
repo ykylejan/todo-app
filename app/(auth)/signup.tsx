@@ -10,7 +10,7 @@ const Signup = () => {
     return (
         <SafeAreaView className="px-6 flex-1">
             <View className="flex-1">
-                <View className="flex-row w-full h-14 justify-between mt-5">
+                <View className="flex-row w-full h-14 justify-between items-center mt-5">
                     <TouchableOpacity
                         hitSlop={{ top: 24, bottom: 24, left: 24, right: 24 }}
                         onPress={() => {

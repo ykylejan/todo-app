@@ -1,43 +1,69 @@
-import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
+import {
+    View,
+    Text,
+    TouchableOpacity,
+    Image,
+    TextInput,
+    ScrollView,
+} from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { router } from "expo-router";
-import { icons, images } from "@/constants";
+import { images } from "@/constants";
 import Button from "@/components/Button";
 import BottomSheetModal from "@/components/BottomSheetModal";
 import Input from "@/components/Input";
 import { Plus } from "lucide-react-native";
+import TaskItem from "@/components/Home/TaskItem";
 
+const initialTasks = [
+    {
+        id: 1,
+        label: "Math Homework",
+        sublabel: "Trigo",
+        status: "Complete",
+    },
+    {
+        id: 2,
+        label: "MooManage",
+        sublabel: "Fix Task Management",
+        status: "Pending",
+    },
+];
 
 const Home = () => {
     const [isAddTask, setIsAddTask] = useState(false);
     const [isPosses, setIsPosses] = useState(false);
+    const [tasks, setTasks] = useState(initialTasks);
+
+    const handleDeleteTask = (taskId: number) => {
+        setTasks(tasks.filter((task) => task.id !== taskId));
+    };
+
     return (
         <SafeAreaView className="px-6">
-            <View className="flex-row w-full h-14 justify-between items-center mt-5 mb-20">
+            <View className="flex-row w-full h-14 justify-between items-center mt-5">
                 <TouchableOpacity
-                  hitSlop={{ top: 24, bottom: 24, left: 24, right: 24 }}
-                  onPress={() => setIsAddTask(true)}
+                    hitSlop={{ top: 24, bottom: 24, left: 24, right: 24 }}
+                    onPress={() => setIsAddTask(true)}
                 >
-                  {/* <Image source={icons.outline} className="w-12 h-12" /> */}
-                  <Plus size={24} color={"white"} />
+                    <Plus size={24} color={"white"} />
                 </TouchableOpacity>
 
-                {/* center part */}
-                <View className="">
+                <View>
                     <Text className="font-afacadsemibold text-3xl text-white">
                         Task
                     </Text>
                 </View>
 
-                {/* right-side part */}
-                <View className="w-12 h-12 rounded-full bg-[#979797] justify-center items-center">
-                    <Text className="font-afacadsemibold text-xl">K</Text>
+                <View className="w-12 h-12 rounded-full bg-[#8875FF] justify-center items-center">
+                    <Text className="font-afacadsemibold text-xl text-white">
+                        K
+                    </Text>
                 </View>
             </View>
 
-            {!isPosses ? (
-                <View className="items-center">
+            {tasks.length <= 0 ? (
+                <View className="items-center mt-20">
                     <Image source={images.emptytasks} className="w-72 h-72" />
                     <Text className="font-afacad text-xl text-white">
                         What do you want to do today?
@@ -53,9 +79,27 @@ const Home = () => {
                 </View>
             ) : (
                 <View>
-                    <Text className="text-white text-3xl">
-                        Tasks here is things
+                    <Input
+                        placeholder="Search your tasks..."
+                        className="mb-5"
+                    />
+
+                    <Text className="text-2xl font-afacadsemibold text-white mb-4">
+                        Current
                     </Text>
+
+                    <ScrollView>
+                        {tasks.map((task) => (
+                            <TaskItem
+                                key={task.id}
+                                id={task.id}
+                                label={task.label}
+                                sublabel={task.sublabel}
+                                status={task.status}
+                                onDelete={handleDeleteTask}
+                            />
+                        ))}
+                    </ScrollView>
                 </View>
             )}
 
