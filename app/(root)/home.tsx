@@ -32,7 +32,6 @@ const initialTasks = [
 
 const Home = () => {
     const [isAddTask, setIsAddTask] = useState(false);
-    const [isPosses, setIsPosses] = useState(false);
     const [tasks, setTasks] = useState(initialTasks);
 
     const [taskLabel, setTaskLabel] = useState("");
