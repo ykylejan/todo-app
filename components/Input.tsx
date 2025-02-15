@@ -9,6 +9,7 @@ const Input = ({
     secureTextEntry,
     value,
     className,
+    onChangeText,
 }: InputProps) => {
     return (
         <View>
@@ -20,6 +21,7 @@ const Input = ({
                 secureTextEntry={secureTextEntry}
                 className={`bg-[#1D1D1D] border border-[#979797] text-white h-14 rounded-md px-4 ${className}`}
                 value={value}
+                onChangeText={onChangeText}
             />
 
         </View>

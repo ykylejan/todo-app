@@ -35,8 +35,26 @@ const Home = () => {
     const [isPosses, setIsPosses] = useState(false);
     const [tasks, setTasks] = useState(initialTasks);
 
+    const [taskLabel, setTaskLabel] = useState("");
+    const [taskSublabel, setTaskSublabel] = useState("");
+
     const handleDeleteTask = (taskId: number) => {
         setTasks(tasks.filter((task) => task.id !== taskId));
+    };
+
+    const handleAddTask = () => {
+        if (taskLabel.trim() && taskSublabel.trim()) {
+            const newTask = {
+                id: tasks.length ? tasks[tasks.length - 1].id + 1 : 1, 
+                label: taskLabel,
+                sublabel: taskSublabel,
+                status: "Pending",
+            };
+            setTasks([...tasks, newTask]);
+            setTaskLabel(""); 
+            setTaskSublabel("");
+            setIsAddTask(false); 
+        }
     };
 
     return (
@@ -111,21 +129,25 @@ const Home = () => {
                 <Text className="text-2xl font-afacad text-white">
                     Add Task
                 </Text>
-                <Input placeholder="Do math homework" />
+
+                <Input
+                    placeholder="Do math homework"
+                    value={taskLabel}
+                    onChangeText={setTaskLabel}
+                />
 
                 <TextInput
                     placeholder="Description"
                     placeholderTextColor="#535353"
                     multiline
                     numberOfLines={3}
+                    value={taskSublabel}
+                    onChangeText={setTaskSublabel}
                     className="pb-24 mt-3 text-white"
                 />
 
                 <Button
-                    onPress={() => {
-                        setIsPosses(true);
-                        setIsAddTask(false);
-                    }}
+                    onPress={handleAddTask}
                     label="Save"
                     className="mb-10"
                 />

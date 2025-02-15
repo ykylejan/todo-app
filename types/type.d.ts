@@ -11,6 +11,7 @@ declare interface InputProps {
     secureTextEntry?: boolean;
     value?: string;
     className?: string;
+    onChangeText?: (text: string) => void;
 }
 
 interface TaskItemProps {
